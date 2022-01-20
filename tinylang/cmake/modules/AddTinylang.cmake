@@ -1,7 +1,9 @@
+# adds a new source directory for inclusion in the build.
 macro(add_tinylang_subdirectory name)
   add_llvm_subdirectory(TINYLANG TOOL ${name})
 endmacro()
 
+# a library is defined that is also installed.
 macro(add_tinylang_library name)
   if(BUILD_SHARED_LIBS)
     set(LIBTYPE SHARED)
@@ -21,10 +23,12 @@ macro(add_tinylang_library name)
   endif()
 endmacro()
 
+# defines an executable
 macro(add_tinylang_executable name)
   add_llvm_executable(${name} ${ARGN} )
 endmacro()
 
+# defines an executable that is also installed
 macro(add_tinylang_tool name)
   add_tinylang_executable(${name} ${ARGN})
   install(TARGETS ${name}
