@@ -1,6 +1,6 @@
-# The LLVM_LINK_COMPONTENTS is set to the list of LLVM 
+# The LLVM_LINK_COMPONENTS is set to the list of LLVM 
 # components that we need to link our tool against
-set(LLVM_LINK_COMPONTENTS 
+set(LLVM_LINK_COMPONENTS 
     Support
 )
 # A new installable application is defined
