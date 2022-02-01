@@ -17,7 +17,7 @@ class Token {
         // Definition of the enumeration for the unique token numbers
         enum TokenKind :unsigned short {
             eoi, unknown, ident, number, comma, colon, plus,
-            minus, star, slash, l_parent, r_parent_ KW_with
+            minus, star, slash, l_parent, r_parent, KW_with
         };
     private:
         TokenKind Kind;
