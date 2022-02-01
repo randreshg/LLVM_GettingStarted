@@ -17,7 +17,7 @@ class Token {
         // Definition of the enumeration for the unique token numbers
         enum TokenKind :unsigned short {
             eoi, unknown, ident, number, comma, colon, plus,
-            minus, star, slash, l_parent, r_parent, KW_with
+            minus, star, slash, l_paren, r_paren, KW_with
         };
     private:
         TokenKind Kind;
@@ -52,5 +52,5 @@ class Lexer {
     private:
         void formToken(Token &Result, const char *TokEnd, Token::TokenKind Kind);
 
-}
+};
 #endif

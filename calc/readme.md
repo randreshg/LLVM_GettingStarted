@@ -1,6 +1,6 @@
 ### CALC ###
 The frontend and backend have specified structrures. The frontend usually performs the following tasks:
-1. The lexer reades the source file and produces a token stream.
+1. The lexer reads the source file and produces a token stream.
 2. The parser creates an AST from the token stream.
 3. The semantic analyzer adds semantic information to the AST.
 4. The code generator produces an intermediate represantion (IR) from the AST.
