@@ -1,4 +1,4 @@
-### CALC ###
+# CALC #
 The frontend and backend have specified structrures. The frontend usually performs the following tasks:
 1. The lexer reads the source file and produces a token stream.
 2. The parser creates an AST from the token stream.
@@ -12,7 +12,7 @@ The intermediate representation is the interface of the backend. The backend doe
 4. Finally, it emits assembler code or an object file.
 
 ## An arithmetic expression language ##
-# Extended Backus-Naur form (EBNF) #
+### Extended Backus-Naur form (EBNF) ###
 ```
 calc : ("with" ident ("," ident)* ":")? expr ;
 expr : term (( "+" | "-" ) term)* ;
