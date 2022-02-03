@@ -49,8 +49,8 @@ void Lexer::next(Token &token) {
             CASE('-', Token::minus);
             CASE('*', Token::star);
             CASE('/', Token::slash);
-            CASE('(', Token::l_parent);
-            CASE(')', Token::r_parent);
+            CASE('(', Token::l_paren);
+            CASE(')', Token::r_paren);
             CASE(':', Token::colon);
             CASE(',', Token::comma);
             #undef CASE
@@ -63,6 +63,6 @@ void Lexer::next(Token &token) {
 
 void Lexer::formToken(Token &Tok, const char *TokEnd, Token::TokenKind Kind) {
     Tok.Kind = Kind;
-    Tok.text = llvm::StringRef(BufferPtr, TokEnd - BufferPtr);
+    Tok.Text = llvm::StringRef(BufferPtr, TokEnd - BufferPtr);
     BufferPtr = TokEnd;
 }

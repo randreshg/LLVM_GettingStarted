@@ -17,7 +17,7 @@ class ToIRVisitor : public ASTVisitor {
     Type *Int8PtrPtrTy;
     Constant *Int32Zero;
     Value *V;
-    StringMap<Value *> nameNap;
+    StringMap<Value *> nameMap;
 
     public:
         ToIRVisitor(Module *M) : M(M), Builder(M->getContext()) {
@@ -31,7 +31,7 @@ class ToIRVisitor : public ASTVisitor {
         void run(AST *Tree) {
             //Function with the "function prototype"
             FunctionType *MainFty = FunctionType::get(Int32Ty, {Int32Ty, Int8PtrPtrTy}, false);
-            Function *MainFn = Function::create(MainFty, GlobalValue::ExternalLinkage, "main", M);
+            Function *MainFn = Function::Create(MainFty, GlobalValue::ExternalLinkage, "main", M);
             //Basic block with the entry label
             BasicBlock *BB = BasicBlock::Create(M->getContext(), "entry", MainFn);
             Builder.SetInsertPoint(BB);
@@ -51,7 +51,7 @@ class ToIRVisitor : public ASTVisitor {
             Function *ReadFn = Function::Create(ReadFty, GlobalValue::ExternalLinkage, "calc_read", M);
             //Loop through the variable names
             for(auto I = Node.begin(), E = Node.end(); I != E; ++I) {
-                //For each variable a string with a variable name is created
+                //For each variable a string with a variable name is Created
                 StringRef Var = *I;
                 Constant *StrText = ConstantDataArray::getString(M->getContext(), Var);
                 GlobalVariable *Str = new GlobalVariable(
@@ -59,9 +59,9 @@ class ToIRVisitor : public ASTVisitor {
                     /*isConstant=*/true,
                     GlobalValue::PrivateLinkage,
                     StrText, Twine(Var).concat(".str"));
-                //IR code to call the calc_read() function is created
+                //IR code to call the calc_read() function is Created
                 Value *Ptr = Builder.CreateInBoundsGEP(
-                    Str, {Int32Zero, Int32Zero, "ptr"});
+                    Str, {Int32Zero, Int32Zero}, "ptr");
                 CallInst *Call = Builder.CreateCall(ReadFty, ReadFn, {Ptr});
                 nameMap[Var] = Call;
             }
@@ -85,24 +85,24 @@ class ToIRVisitor : public ASTVisitor {
             Node.getRight()->accept(*this);
             Value *Right = V;
             //Operator
-            switch(Node.getOperator) {
+            switch(Node.getOperator()) {
                 case BinaryOp::Plus:
-                    V = Builder.createNSWAdd(Left, Right); break;
+                    V = Builder.CreateNSWAdd(Left, Right); break;
                 case BinaryOp::Minus:
-                    V = Builder.createNSWSub(Left, Right); break;
+                    V = Builder.CreateNSWSub(Left, Right); break;
                 case BinaryOp::Mul:
-                    V = Builder.createNSWMul(Left, Right); break;
+                    V = Builder.CreateNSWMul(Left, Right); break;
                 case BinaryOp::Div:
-                    V = Builder.createSDiv(Left, Right); break;
+                    V = Builder.CreateSDiv(Left, Right); break;
             }
         };
 };
 }
 
 //Creates the global context, run the tree travelsal and dumbs the gen IR
-void CodeGen::Compile(AST *Tree) {
+void CodeGen::compile(AST *Tree) {
     LLVMContext Ctx;
-    Module *M = New Module("calc.expr", Ctx);
+    Module *M = new Module("calc.expr", Ctx);
     ToIRVisitor ToIR(M);
     ToIR.run(Tree);
     M->print(outs(), nullptr);

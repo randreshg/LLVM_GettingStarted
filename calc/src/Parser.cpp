@@ -1,7 +1,7 @@
 #include "Parser.h"
 
 AST *Parser::parse() {
-    AST *Res = ParseCalc();
+    AST *Res = parseCalc();
     expect(Token::eoi);
     return Res;
 }
@@ -68,11 +68,11 @@ Expr *Parser::parseFactor() {
     Expr *Res = nullptr;
     switch (Tok.getKind()) {
         case Token::number:
-            Res = new Factor(Factor::Number);
+            Res = new Factor(Factor::Number, Tok.getText());
             advance();
             break;
         case Token::ident:
-            Res = new Factor(Factor::ident, Tok.getText());
+            Res = new Factor(Factor::Ident, Tok.getText());
             advance();
             break;
         case Token::l_paren:

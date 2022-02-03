@@ -40,7 +40,7 @@ class Factor : public Expr {
         ValueKind Kind;
         llvm::StringRef Val;
     public:
-        Factor(ValueKind Kind, llvm::StringRef Val) : Kind(Kins), Val(Val) {}
+        Factor(ValueKind Kind, llvm::StringRef Val) : Kind(Kind), Val(Val) {}
         ValueKind getKind() { return Kind; }
         llvm::StringRef getVal() { return Val; }
         virtual void accept(ASTVisitor &V) override { V.visit(*this); }

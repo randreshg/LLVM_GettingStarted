@@ -1,5 +1,6 @@
 #include "Sema.h"
 #include "llvm/ADT/StringSet.h"
+#include "llvm/Support/raw_ostream.h"
 
 namespace {
 class DeclCheck : public ASTVisitor {
@@ -16,7 +17,7 @@ class DeclCheck : public ASTVisitor {
         }
 
     public:
-        DeclCheck : HasError(false) {}
+        DeclCheck() : HasError(false) {}
         bool hasError() { return HasError; }
 
         virtual void visit(Factor &Node) override {
@@ -57,6 +58,6 @@ bool Sema::semantic(AST *Tree) {
     if(!Tree) return false;
     DeclCheck Check;
     Tree->accept(Check);
-    return Check.HasError();
+    return Check.hasError();
 
 }
