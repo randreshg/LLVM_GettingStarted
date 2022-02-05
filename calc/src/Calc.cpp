@@ -24,6 +24,11 @@ int main(int argc, const char **argv) {
         llvm::errs() << "Syntax errors occured\n";
         return 1;
     }
+    Sema Semantic;
+    if (Semantic.semantic(Tree)) {
+        llvm::errs() << "Semantic errors occured\n";
+        return 1;
+    }
     //Code generator
     CodeGen CodeGenerator;
     CodeGenerator.compile(Tree);
